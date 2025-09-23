@@ -1,0 +1,13 @@
+{
+  "name": "aerocast",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./docs/output.css",
+    "dev": "tailwindcss -i ./src/input.css -o ./docs/output.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.13",
+    "tailwindcss": "^4.1.13"
+  }
+}
