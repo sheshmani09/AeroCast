@@ -5,10 +5,186 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AeroCast</title>
     <link href="./output.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
-  <body >
-    <nav class="bg-slate-900">
-      <h1 class="text-4xl">AeroCast</h1>
-    </nav>
+  <body class="font-[Inter,_sans-serif] bg-slate-900 text-slate-200">
+    <div
+      class="relative min-h-screen bg-[url('assets/sunny.jpg')] bg-right sm:bg-center bg-cover flex items-center justify-center px-4 py-8"
+    >
+      <div
+        id="app-container"
+        class="bg-slate-900/60 rounded-3xl w-full max-w-[1000px] flex flex-col md:flex-row gap-6 p-4 md:p-8 shadow-lg"
+      >
+        <!-- Left block -->
+        <div
+          id="left"
+          class="md:basis-1/3 text-slate-200 flex flex-col justify-between"
+        >
+          <!-- Search Bar -->
+          <div class="flex items-center p-2 bg-slate-800/80 rounded-full mb-8">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 text-slate-300"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+              />
+            </svg>
+            <input
+              type="text"
+              id="city-input"
+              placeholder="Search location"
+              class="flex-grow bg-transparent text-white placeholder-gray-400 focus:outline-none ml-3"
+            />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 text-slate-300"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </div>
+
+          <!-- Temperature Info & Info Cards -->
+          <div class="flex flex-col items-center gap-6">
+            <!-- Temperature Card -->
+            <div
+              class="bg-slate-800/50 rounded-3xl p-6 w-full text-center shadow-lg"
+            >
+              <h1 class="text-5xl md:text-6xl font-bold">28&deg;</h1>
+              <h2 class="text-2xl md:text-3xl font-medium mt-1">Rainy Day</h2>
+              <p class="text-sm text-slate-300 mt-2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </p>
+            </div>
+
+            <!-- Info Cards -->
+            <div class="flex gap-4 flex-wrap justify-center w-full">
+              <div
+                class="bg-slate-800/50 rounded-2xl p-4 flex-1 min-w-[140px] max-w-[200px] shadow-md"
+              >
+                <div class="flex items-center gap-2 text-xs text-slate-300">
+                  <i class="fa-solid fa-temperature-high"></i>
+                  <span>FEELS LIKE</span>
+                </div>
+                <h1 class="font-semibold text-2xl md:text-3xl mt-2">30&deg;</h1>
+                <p class="text-xs text-slate-400 mt-1">
+                  Humidity is making it feel warmer
+                </p>
+              </div>
+              <div
+                class="bg-slate-800/50 rounded-2xl p-4 flex-1 min-w-[140px] max-w-[200px] shadow-md"
+              >
+                <div class="flex items-center gap-2 text-xs text-slate-300">
+                  <i class="fa-solid fa-droplet"></i>
+                  <span>PRECIPITATION</span>
+                </div>
+                <h1 class="font-semibold text-2xl md:text-3xl mt-2">2.3"</h1>
+                <p class="text-xs text-slate-400 mt-1">in last 24 hrs</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right block -->
+        <div id="right" class="md:basis-2/3 flex flex-col gap-6 text-slate-200">
+          <!-- Hourly Forecast -->
+          <div class="bg-slate-800/70 p-4 rounded-xl">
+            <div class="flex items-center gap-2 text-xs">
+              <i class="fa-regular fa-clock"></i>
+              <span>HOURLY FORECAST</span>
+            </div>
+            <div class="border-t border-slate-700 my-2"></div>
+            <div class="flex overflow-x-auto gap-4 mt-3 pb-2 min-w-full">
+              <div class="flex flex-col items-center min-w-[60px]">
+                <p class="text-xs">1 PM</p>
+                <i class="fa-solid fa-cloud text-lg"></i>
+                <p class="text-sm font-medium">27&deg;</p>
+              </div>
+              <div class="flex flex-col items-center min-w-[60px]">
+                <p class="text-xs">2 PM</p>
+                <i class="fa-solid fa-cloud-rain text-lg"></i>
+                <p class="text-sm font-medium">26&deg;</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7 Day Forecast -->
+          <div class="bg-slate-800/70 p-4 rounded-xl">
+            <div class="flex items-center gap-2 text-xs">
+              <i class="fa-regular fa-calendar"></i>
+              <span>7 DAY FORECAST</span>
+            </div>
+            <div class="border-t border-slate-700 my-2"></div>
+            <div class="flex overflow-x-auto gap-6 mt-3 pb-2 min-w-full">
+              <div class="flex flex-col items-center min-w-[60px]">
+                <p class="text-xs">Mon</p>
+                <i class="fa-solid fa-sun text-lg"></i>
+                <p class="text-sm font-medium">30&deg;</p>
+              </div>
+              <div class="flex flex-col items-center min-w-[60px]">
+                <p class="text-xs">Tue</p>
+                <i class="fa-solid fa-cloud text-lg"></i>
+                <p class="text-sm font-medium">28&deg;</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Extra Info Cards -->
+          <div class="flex gap-6 flex-wrap justify-around">
+            <div
+              class="bg-slate-800/80 p-4 flex-1 min-w-[150px] max-w-[220px] rounded-xl shadow-md"
+            >
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i class="fa-solid fa-droplet"></i>
+                <span>HUMIDITY</span>
+              </div>
+              <h1 class="text-3xl font-semibold mt-2">82%</h1>
+            </div>
+            <div
+              class="bg-slate-800/80 p-4 flex-1 min-w-[150px] max-w-[220px] rounded-xl shadow-md"
+            >
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i class="fa-solid fa-wind"></i>
+                <span>WIND</span>
+              </div>
+              <div class="flex justify-around items-center mt-2">
+                <h1 class="font-semibold">
+                  <span class="text-3xl">3</span> MPH
+                </h1>
+                <i class="fa-regular fa-compass text-3xl"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
