@@ -53,6 +53,7 @@
             <input
               type="text"
               id="city-input"
+              autocomplete="off"
               placeholder="Search location"
               class="flex-grow bg-transparent text-white placeholder-gray-400 focus:outline-none ml-3"
             />
@@ -63,6 +64,7 @@
               stroke-width="1.5"
               stroke="currentColor"
               class="w-6 h-6 text-slate-300"
+              id="search-btn"
             >
               <path
                 stroke-linecap="round"
@@ -74,15 +76,24 @@
 
           <!-- Temperature Info & Info Cards -->
           <div class="flex flex-col items-center gap-6">
-            <!-- Temperature Card -->
+            <!-- Current Weather Card -->
             <div
               class="bg-slate-800/50 rounded-3xl p-6 w-full text-center shadow-lg"
+              id="current-weather-card"
             >
-              <h1 class="text-5xl md:text-6xl font-bold">28&deg;</h1>
-              <h2 class="text-2xl md:text-3xl font-medium mt-1">Rainy Day</h2>
-              <p class="text-sm text-slate-300 mt-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <h1 id="current-temp" class="text-5xl md:text-6xl font-bold">
+                --&deg;
+              </h1>
+              <h2
+                id="current-desc"
+                class="text-2xl md:text-3xl font-medium mt-1"
+              >
+                Rainy Day
+              </h2>
+              <p id="current-extra" class="text-sm text-slate-300 mt-2">
+                High: --° Low: --°
               </p>
+              <i id="current-icon" class="fa-solid fa-sun text-4xl mt-2"></i>
             </div>
 
             <!-- Info Cards -->
@@ -94,7 +105,7 @@
                   <i class="fa-solid fa-temperature-high"></i>
                   <span>FEELS LIKE</span>
                 </div>
-                <h1 class="font-semibold text-2xl md:text-3xl mt-2">30&deg;</h1>
+                <h1 id="feels-like" class="font-semibold text-2xl md:text-3xl mt-2">30&deg;</h1>
                 <p class="text-xs text-slate-400 mt-1">
                   Humidity is making it feel warmer
                 </p>
@@ -106,7 +117,7 @@
                   <i class="fa-solid fa-droplet"></i>
                   <span>PRECIPITATION</span>
                 </div>
-                <h1 class="font-semibold text-2xl md:text-3xl mt-2">2.3"</h1>
+                <h1 id="precipitation" class="font-semibold text-2xl md:text-3xl mt-2">2.3"</h1>
                 <p class="text-xs text-slate-400 mt-1">in last 24 hrs</p>
               </div>
             </div>
@@ -186,5 +197,7 @@
         </div>
       </div>
     </div>
+
+    <script src="app.js"></script>
   </body>
 </html>
