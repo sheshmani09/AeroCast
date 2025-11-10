@@ -15,6 +15,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <style>
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
   </head>
   <body class="font-[Inter,_sans-serif] bg-slate-900 text-slate-200">
     <div
@@ -105,7 +110,12 @@
                   <i class="fa-solid fa-temperature-high"></i>
                   <span>FEELS LIKE</span>
                 </div>
-                <h1 id="feels-like" class="font-semibold text-2xl md:text-3xl mt-2">30&deg;</h1>
+                <h1
+                  id="feels-like"
+                  class="font-semibold text-2xl md:text-3xl mt-2"
+                >
+                  30&deg;
+                </h1>
                 <p class="text-xs text-slate-400 mt-1">
                   Humidity is making it feel warmer
                 </p>
@@ -117,7 +127,12 @@
                   <i class="fa-solid fa-droplet"></i>
                   <span>PRECIPITATION</span>
                 </div>
-                <h1 id="precipitation" class="font-semibold text-2xl md:text-3xl mt-2">2.3"</h1>
+                <h1
+                  id="precipitation"
+                  class="font-semibold text-2xl md:text-3xl mt-2"
+                >
+                  2.3"
+                </h1>
                 <p class="text-xs text-slate-400 mt-1">in last 24 hrs</p>
               </div>
             </div>
@@ -133,17 +148,12 @@
               <span>HOURLY FORECAST</span>
             </div>
             <div class="border-t border-slate-700 my-2"></div>
-            <div class="flex overflow-x-auto gap-4 mt-3 pb-2 min-w-full">
-              <div class="flex flex-col items-center min-w-[60px]">
-                <p class="text-xs">1 PM</p>
-                <i class="fa-solid fa-cloud text-lg"></i>
-                <p class="text-sm font-medium">27&deg;</p>
-              </div>
-              <div class="flex flex-col items-center min-w-[60px]">
-                <p class="text-xs">2 PM</p>
-                <i class="fa-solid fa-cloud-rain text-lg"></i>
-                <p class="text-sm font-medium">26&deg;</p>
-              </div>
+
+            <div class="w-full overflow-x-auto scrollbar-hide">
+              <div
+                id="hourly-forecast"
+                class="flex flex-nowrap items-center px-2 snap-x snap-mandatory"
+              ></div>
             </div>
           </div>
 
@@ -154,17 +164,12 @@
               <span>7 DAY FORECAST</span>
             </div>
             <div class="border-t border-slate-700 my-2"></div>
-            <div class="flex overflow-x-auto gap-6 mt-3 pb-2 min-w-full">
-              <div class="flex flex-col items-center min-w-[60px]">
-                <p class="text-xs">Mon</p>
-                <i class="fa-solid fa-sun text-lg"></i>
-                <p class="text-sm font-medium">30&deg;</p>
-              </div>
-              <div class="flex flex-col items-center min-w-[60px]">
-                <p class="text-xs">Tue</p>
-                <i class="fa-solid fa-cloud text-lg"></i>
-                <p class="text-sm font-medium">28&deg;</p>
-              </div>
+
+            <div class="w-full overflow-x-auto scrollbar-hide">
+              <div
+                id="weekly-forecast"
+                class="flex flex-nowrap justify-between items-center px-2 snap-x snap-mandatory scroll-smooth"
+              ></div>
             </div>
           </div>
 

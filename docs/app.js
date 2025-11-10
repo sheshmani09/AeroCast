@@ -45,7 +45,8 @@ searchBtn.addEventListener("click", handleSearch);
 // Fetch weather data
 async function fetchWeather(lat, lon) {
   try {
-    const base_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,apparent_temperature,precipitation&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_sum&current_weather=true&timezone=auto`;
+    const base_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,apparent_temperature,precipitation,relative_humidity_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_sum&current_weather=true&timezone=auto`;
+
     const res = await fetch(base_url);
     const data = await res.json();
     return data;
@@ -146,6 +147,10 @@ function updateWeatherCard(data) {
 
   const precipitation = daily.precipitation_sum?.[0]?.toFixed(1) ?? "-";
   document.getElementById("precipitation").innerHTML = `${precipitation}"`;
+
+  //hourly forecast update
+  updateHourlyData(data);
+  updateWeeklyData(data);
 }
 
 // Get current location weather
@@ -172,3 +177,66 @@ function getCurrentLocationWeather() {
 }
 
 window.addEventListener("load", getCurrentLocationWeather);
+
+function updateHourlyData(data) {
+  const container = document.getElementById("hourly-forecast");
+  container.innerHTML = "";
+
+  const now = new Date();
+  const hrs = data.hourly.time.map((t) => new Date(t));
+  const currIndex = hrs.findIndex((h) => h.getHours() === now.getHours());
+  const end = Math.min(currIndex + 12, data.hourly.time.length);
+
+  for (let i = currIndex; i < end; i++) {
+    const time = hrs[i];
+    const temp = data.hourly.temperature_2m[i];
+    const code = data.hourly.weathercode ? data.hourly.weathercode[i] : 0;
+
+    const timeStr = time.toLocaleTimeString([], {
+      hour: "numeric",
+      hour12: true,
+    });
+    const iconClass = getWeatherIcons(code);
+
+    const hourDiv = document.createElement("div");
+    hourDiv.className =
+      "flex flex-col items-center justify-center w-[75px] snap-center text-center flex-none";
+
+    hourDiv.innerHTML = `
+      <p class="text-xs mb-1">${timeStr}</p>
+      <i class="fa-solid ${iconClass} text-lg mb-1"></i>
+      <p class="text-sm font-medium">${temp.toFixed(0)}&deg;</p>
+    `;
+
+    if (i < end - 1) hourDiv.style.marginRight = "16px";
+
+    container.appendChild(hourDiv);
+  }
+}
+
+function updateWeeklyData(data) {
+  const container = document.getElementById("weekly-forecast");
+  container.innerHTML = "";
+
+  const days = data.daily.time;
+  const highs = data.daily.temperature_2m_max;
+  const codes = data.daily.weathercode;
+
+  for (let i = 0; i < Math.min(7, days.length); i++) {
+    const date = new Date(days[i]);
+    const weekday = date.toLocaleDateString(undefined, {
+      weekday: "short",
+    });
+
+    const temp = Math.round(highs[i]);
+    const iconClass = getWeatherIcons(codes[i]);
+    const dayDiv = document.createElement("div");
+    dayDiv.className = "flex flex-col items-center min-w-[60px] snap-center";
+
+    dayDiv.innerHTML = ` <p class="text-xs mb-1">${weekday}</p>
+      <i class="fa-solid ${iconClass} text-lg mb-1"></i>
+      <p class="text-sm font-medium">${temp}&deg;</p>`;
+
+    container.appendChild(dayDiv);
+  }
+}
