@@ -45,7 +45,7 @@ searchBtn.addEventListener("click", handleSearch);
 // Fetch weather data
 async function fetchWeather(lat, lon) {
   try {
-    const base_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,apparent_temperature,precipitation,relative_humidity_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_sum&current_weather=true&timezone=auto`;
+    const base_url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,apparent_temperature,precipitation,relative_humidity_2m,weathercode,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_sum&current_weather=true&timezone=auto`;
 
     const res = await fetch(base_url);
     const data = await res.json();
@@ -147,6 +147,18 @@ function updateWeatherCard(data) {
 
   const precipitation = daily.precipitation_sum?.[0]?.toFixed(1) ?? "-";
   document.getElementById("precipitation").innerHTML = `${precipitation}"`;
+
+  // Humidity
+  const humidity = data.hourly.relative_humidity_2m?.[nearestIndex] ?? "-";
+  document
+    .getElementById("humidity-card")
+    .querySelector("h1").innerText = `${humidity}%`;
+
+  // Wind speed
+  const windSpeed = data.hourly.windspeed_10m?.[nearestIndex] ?? "-";
+  document
+    .getElementById("wind-card")
+    .querySelector("h1").innerText = `${windSpeed} MPH`;
 
   //hourly forecast update
   updateHourlyData(data);
