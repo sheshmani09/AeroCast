@@ -57,7 +57,12 @@ async function fetchWeather(lat, lon) {
 }
 
 // Map weather code to icon
-function getWeatherIcons(code) {
+function getWeatherIcons(code, isNight = false) {
+  if (isNight) {
+    if ([0].includes(code)) return "fa-moon";
+    if ([1, 2].includes(code)) return "fa-cloud-moon";
+  }
+
   if ([0].includes(code)) return "fa-sun";
   if ([1, 2, 3].includes(code)) return "fa-cloud";
   if ([45, 48].includes(code)) return "fa-smog";
@@ -82,8 +87,12 @@ function getWeatherDesc(code) {
 // Update background based on weather code
 function updateBg(code) {
   const container = document.querySelector(".relative");
+  const hour = new Date().getHours();
+  const isNight = hour > 18 || hour <= 5;
 
-  if ([0].includes(code))
+  if (isNight && [0].includes(code)) {
+    container.style.backgroundImage = "url('assets/night.jpg')";
+  } else if ([0].includes(code))
     container.style.backgroundImage = "url('assets/sunny.jpg')";
   else if ([1, 2, 3].includes(code))
     container.style.backgroundImage = "url('assets/cloudy.jpg')";
@@ -133,7 +142,9 @@ function updateWeatherCard(data) {
   ).innerHTML = `High: ${high}&deg; Low: ${low}&deg;`;
 
   // Icon update
-  const iconClass = getWeatherIcons(current.weathercode);
+  const hour = new Date().getHours();
+  const isNight = hour > 18 || hour <= 5;
+  const iconClass = getWeatherIcons(current.weathercode, isNight);
   document.getElementById(
     "current-icon"
   ).className = `fa-solid ${iconClass} text-4xl mt-2`;
@@ -208,7 +219,9 @@ function updateHourlyData(data) {
       hour: "numeric",
       hour12: true,
     });
-    const iconClass = getWeatherIcons(code);
+    const hour = time.getHours();
+    const isNight = hour > 18 || hour <= 5;
+    const iconClass = getWeatherIcons(code, isNight);
 
     const hourDiv = document.createElement("div");
     hourDiv.className =
