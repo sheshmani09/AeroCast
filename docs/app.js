@@ -116,14 +116,13 @@ function updateWeatherCard(data) {
   const daily = data.daily;
 
   // Get nearest hourly temperature for more accurate "current" temp
-  const now = new Date();
-  const hours = data.hourly.time.map((t) => new Date(t).getHours());
+  const now = new Date(data.current_weather.time).getTime(); 
+  const hours = data.hourly.time.map((t) => new Date(t).getTime());
+
   const nearestIndex = hours.reduce((prev, curr, idx) => {
-    return Math.abs(curr - now.getHours()) <
-      Math.abs(hours[prev] - now.getHours())
-      ? idx
-      : prev;
+    return Math.abs(curr - now) < Math.abs(hours[prev] - now) ? idx : prev;
   }, 0);
+
   const temp = data.hourly.temperature_2m[nearestIndex];
 
   // Current temperature
