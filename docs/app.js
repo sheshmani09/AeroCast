@@ -1,11 +1,12 @@
 // Get city coordinates
 async function getCoordinates(city) {
   try {
-   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}&limit=1&addressdetails=1`;
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    const res = await fetch(proxy);
-    const wrapped = await res.json();
-    const data = JSON.parse(wrapped.contents);
+    const response = await fetch(
+      `https://api.allorigins.win/raw?url=${encodeURIComponent(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${city}&limit=1&addressdetails=1`
+      )}`
+    );
+    const data = await response.json();
     console.log(data);
 
     if (data.length > 0) {
