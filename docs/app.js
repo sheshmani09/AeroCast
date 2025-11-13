@@ -1,14 +1,17 @@
 // Get city coordinates
 async function getCoordinates(city) {
   try {
-    const response = await fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`
-    );
-    const data = await response.json();
+   const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}&limit=1&addressdetails=1`;
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    const res = await fetch(proxy);
+    const wrapped = await res.json();
+    const data = JSON.parse(wrapped.contents);
+    console.log(data);
 
-    if (data.results && data.results.length > 0) {
-      const { latitude, longitude } = data.results[0];
-      return { lat: latitude, lon: longitude };
+    if (data.length > 0) {
+      const { lat, lon, display_name } = data[0];
+      console.log("✅ Selected location:", display_name);
+      return { lat: parseFloat(lat), lon: parseFloat(lon) };
     } else {
       alert("City not found");
       return null;
@@ -116,7 +119,7 @@ function updateWeatherCard(data) {
   const daily = data.daily;
 
   // Get nearest hourly temperature for more accurate "current" temp
-  const now = new Date(data.current_weather.time).getTime(); 
+  const now = new Date(data.current_weather.time).getTime();
   const hours = data.hourly.time.map((t) => new Date(t).getTime());
 
   const nearestIndex = hours.reduce((prev, curr, idx) => {
